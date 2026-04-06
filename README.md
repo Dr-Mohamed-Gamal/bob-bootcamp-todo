@@ -106,7 +106,10 @@ Help me plan:
 Ask me clarifying questions first.
 ```
 
-Bob will ask clarifying questions. Answer with: simple layout, vanilla JS, no frameworks, no due dates.
+Bob will ask some clarifying questions — this is intentional. For example:
+
+- *"What features would you like in your Todo app?"* → Choose **Basic features: Add todos, mark as complete, delete todos**
+- *"Do you want todos to persist when the page is refreshed?"* → Choose **No persistence needed — todos can be lost on refresh**
 
 **Expected output from Bob:**
 - Folder: `todo-app/` containing `index.html`, `styles.css`, `app.js`

@@ -31,8 +31,10 @@ Lab timeline (45 min)
 **Switch Bob to Plan mode.**
 
 Before writing any code, ask Bob to design the project. Bob will ask
-clarifying questions — this is intentional. Answer with: simple layout,
-vanilla JS, no frameworks, no due dates.
+some clarifying questions — this is intentional. For example:
+
+- *"What features would you like in your Todo app?"* → Choose **Basic features: Add todos, mark as complete, delete todos**
+- *"Do you want todos to persist when the page is refreshed?"* → Choose **No persistence needed — todos can be lost on refresh**
 
 **Prompt for Bob:**
 ```
