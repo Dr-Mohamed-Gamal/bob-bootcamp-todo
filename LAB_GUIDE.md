@@ -36,6 +36,7 @@ some clarifying questions — this is intentional. For example:
 
 - *"What features would you like in your Todo app?"* → Choose **Basic features: Add todos, mark as complete, delete todos**
 - *"Do you want todos to persist when the page is refreshed?"* → Choose **No persistence needed — todos can be lost on refresh**
+- *"What visual style would you prefer for the Todo app?"* → Choose **Modern & Minimal: Clean design with subtle shadows, modern colors, smooth animations**
 
 **Prompt for Bob:**
 ```
