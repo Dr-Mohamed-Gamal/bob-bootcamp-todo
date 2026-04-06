@@ -304,6 +304,7 @@ Cover these cases:
 - toggleComplete flips the completed status of the correct todo
 - deleteTodo removes the correct todo and leaves others unchanged
 - render shows "No tasks yet" when the list is empty
+Ensure at least 90% code coverage across all methods.
 Run the tests and show me the results.
 ```
 
