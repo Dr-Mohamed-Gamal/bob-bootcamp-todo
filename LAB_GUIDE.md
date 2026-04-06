@@ -16,12 +16,13 @@ A clean Todo app inside a `todo-app/` folder with three files:
 ## Lab timeline
 
 ```
-Lab timeline (45 min)
+Lab timeline (55 min)
 ├── Lab 01: Plan the structure       — Plan mode     (5 min)
 ├── Lab 02: Build HTML & CSS         — Code mode     (10 min)
 ├── Lab 03: Build the TodoApp class  — Code mode     (10 min)
 ├── Lab 04: Understand edge cases    — Ask mode      (10 min)
-└── Lab 05: Push to GitHub           — Advanced mode (10 min)
+├── Lab 05: Create & run unit tests  — Code mode     (10 min)
+└── Lab 06: Push to GitHub           — Advanced mode (10 min)
 ```
 
 ---
@@ -229,7 +230,92 @@ addTodo(text) {
 
 ---
 
-## Lab 05 — Push to GitHub (Advanced mode, 10 min)
+## Lab 05 — Create & Run Unit Tests (Code mode, 10 min)
+
+**Switch Bob to Code mode.**
+
+Now that the app logic is complete, ask Bob to generate unit tests for the TodoApp class and run them.
+
+**Prompt for Bob:**
+```
+Create unit tests for the TodoApp class in todo-app/app.js.
+Test all methods: addTodo, toggleComplete, deleteTodo, and render.
+Cover these cases:
+- addTodo adds a todo with correct id, text, and completed=false
+- addTodo ignores empty or whitespace-only input
+- toggleComplete flips the completed status of the correct todo
+- deleteTodo removes the correct todo and leaves others unchanged
+- render shows "No tasks yet" when the list is empty
+Run the tests and show me the results.
+```
+
+**What Bob generates:**
+
+Bob will create a `todo-app/app.test.js` file using a simple in-browser test runner (no external dependencies needed). Example test structure:
+
+```javascript
+// Simple test runner
+function test(description, fn) {
+  try {
+    fn();
+    console.log(`PASS: ${description}`);
+  } catch (e) {
+    console.error(`FAIL: ${description} — ${e.message}`);
+  }
+}
+
+function assert(condition, message) {
+  if (!condition) throw new Error(message || 'Assertion failed');
+}
+
+// Tests
+test('addTodo creates a todo with correct fields', () => {
+  const app = new TodoApp();
+  app.addTodo('Buy milk');
+  assert(app.todos.length === 1, 'Should have 1 todo');
+  assert(app.todos[0].text === 'Buy milk', 'Text should match');
+  assert(app.todos[0].completed === false, 'Should start incomplete');
+});
+
+test('addTodo ignores empty input', () => {
+  const app = new TodoApp();
+  app.addTodo('   ');
+  assert(app.todos.length === 0, 'Should not add whitespace-only todo');
+});
+
+test('toggleComplete flips completed status', () => {
+  const app = new TodoApp();
+  app.addTodo('Test task');
+  const id = app.todos[0].id;
+  app.toggleComplete(id);
+  assert(app.todos[0].completed === true, 'Should be completed');
+  app.toggleComplete(id);
+  assert(app.todos[0].completed === false, 'Should be uncompleted again');
+});
+
+test('deleteTodo removes the correct item', () => {
+  const app = new TodoApp();
+  app.addTodo('Task 1');
+  app.addTodo('Task 2');
+  const id = app.todos[0].id;
+  app.deleteTodo(id);
+  assert(app.todos.length === 1, 'Should have 1 todo left');
+  assert(app.todos[0].text === 'Task 2', 'Remaining todo should be Task 2');
+});
+```
+
+**To run the tests:**
+1. Open browser DevTools (F12) → Console tab
+2. Open `todo-app/index.html` — test results appear automatically
+3. All lines should show `PASS:`
+
+**Checkpoint:** All tests pass in the browser console with no `FAIL:` lines.
+
+> **Bob differentiator:** Bob generates tests that match the exact code it wrote — no manual wiring needed. The tests serve as living documentation of expected behavior.
+
+---
+
+## Lab 06 — Push to GitHub (Advanced mode, 10 min)
 
 **Switch Bob to Advanced mode.**
 
@@ -300,6 +386,7 @@ You've used all four Bob modes to build and ship a complete Todo app.
 | Plan     | Architecture and design decisions before coding |
 | Code     | Generating files with auto-approvals and literate coding |
 | Ask      | Understanding edge cases before fixing them |
+| Code     | Creating and running unit tests |
 | Advanced | GitHub integration via MCP server |
 
 ### Next steps

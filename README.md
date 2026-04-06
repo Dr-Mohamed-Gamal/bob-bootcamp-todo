@@ -37,39 +37,37 @@ Before starting, ensure you have:
 
 ---
 
-## Understanding Bob's modes
+## Understanding Bob's Modes
 
-Bob has four distinct modes, each optimized for different tasks:
+Bob has three distinct modes, each optimized for different tasks:
 
-> **Bob Differentiator: Customizable Modes** — Bob's mode system is one of its key differentiators. Unlike other AI assistants, Bob allows you to create custom modes tailored to your team's specific workflows.
+> **Bob Differentiator: Customizable Modes** — Bob's mode system is one of its key differentiators. Unlike other AI assistants, Bob allows you to create custom modes tailored to your team's specific workflows. The three built-in modes you'll use in this lab are just the beginning — you can create specialized modes for code review, documentation, architecture design, and more.
 
-**Plan mode** — When to use: Planning, designing, strategizing
+**🎯 Plan Mode** — When to use: Planning, designing, strategizing
 - Create project structures
-- Design layouts and architecture
-- Plan class design and state management
-- Make decisions before writing code
+- Design API endpoints
+- Plan database schemas
+- Make architectural decisions
 
-**Code mode** — When to use: Writing, modifying, refactoring code
+**💻 Code Mode** — When to use: Writing, modifying, refactoring code
 - Implement features
 - Create files
 - Modify existing code
 - Fix bugs
 
-**Ask mode** — When to use: Learning, understanding, getting help
+**❓ Ask Mode** — When to use: Learning, understanding, getting help
 - Explain code concepts
-- Understand edge cases
+- Get documentation
+- Understand errors
 - Learn best practices
 
-**Advanced mode** — When you need external tools
-- Everything Code mode does
-- Plus MCP servers (GitHub, JIRA, databases, internal APIs)
-
-**Switching between modes**
+**Switching Between Modes**
 
 In Bob's interface:
-1. Look for the mode selector at the bottom of the chat panel
+1. Look for the mode selector (usually at the top)
 2. Click to see available modes
-3. Select the mode you need — Bob will adapt its behaviour accordingly
+3. Select the mode you need
+4. Bob will adapt its behavior accordingly
 
 **Tip:** You can switch to Ask mode at any point if something is unclear. Example questions to try:
 - *"Why does each todo need a unique ID instead of an index?"*
@@ -81,12 +79,13 @@ In Bob's interface:
 ## Lab timeline
 
 ```
-Lab 1 (45 min)
+Lab 1 (55 min)
 ├── Lab 01: Plan the structure       — Plan mode     (5 min)
 ├── Lab 02: Build HTML & CSS         — Code mode     (10 min)
 ├── Lab 03: Build the TodoApp class  — Code mode     (10 min)
 ├── Lab 04: Understand edge cases    — Ask mode      (10 min)
-└── Lab 05: Push to GitHub           — Advanced mode (10 min)
+├── Lab 05: Create & run unit tests  — Code mode     (10 min)
+└── Lab 06: Push to GitHub           — Advanced mode (10 min)
 ```
 
 ---
@@ -289,7 +288,92 @@ addTodo(text) {
 
 ---
 
-## Lab 05 — Push to GitHub (Advanced mode, 10 min)
+## Lab 05 — Create & Run Unit Tests (Code mode, 10 min)
+
+**Switch Bob to Code mode.**
+
+Now that the app logic is complete, ask Bob to generate unit tests for the TodoApp class and run them.
+
+**Prompt for Bob:**
+```
+Create unit tests for the TodoApp class in todo-app/app.js.
+Test all methods: addTodo, toggleComplete, deleteTodo, and render.
+Cover these cases:
+- addTodo adds a todo with correct id, text, and completed=false
+- addTodo ignores empty or whitespace-only input
+- toggleComplete flips the completed status of the correct todo
+- deleteTodo removes the correct todo and leaves others unchanged
+- render shows "No tasks yet" when the list is empty
+Run the tests and show me the results.
+```
+
+**What Bob generates:**
+
+Bob will create a `todo-app/app.test.js` file using a simple in-browser test runner (no external dependencies needed). Example test structure:
+
+```javascript
+// Simple test runner
+function test(description, fn) {
+  try {
+    fn();
+    console.log(`PASS: ${description}`);
+  } catch (e) {
+    console.error(`FAIL: ${description} — ${e.message}`);
+  }
+}
+
+function assert(condition, message) {
+  if (!condition) throw new Error(message || 'Assertion failed');
+}
+
+// Tests
+test('addTodo creates a todo with correct fields', () => {
+  const app = new TodoApp();
+  app.addTodo('Buy milk');
+  assert(app.todos.length === 1, 'Should have 1 todo');
+  assert(app.todos[0].text === 'Buy milk', 'Text should match');
+  assert(app.todos[0].completed === false, 'Should start incomplete');
+});
+
+test('addTodo ignores empty input', () => {
+  const app = new TodoApp();
+  app.addTodo('   ');
+  assert(app.todos.length === 0, 'Should not add whitespace-only todo');
+});
+
+test('toggleComplete flips completed status', () => {
+  const app = new TodoApp();
+  app.addTodo('Test task');
+  const id = app.todos[0].id;
+  app.toggleComplete(id);
+  assert(app.todos[0].completed === true, 'Should be completed');
+  app.toggleComplete(id);
+  assert(app.todos[0].completed === false, 'Should be uncompleted again');
+});
+
+test('deleteTodo removes the correct item', () => {
+  const app = new TodoApp();
+  app.addTodo('Task 1');
+  app.addTodo('Task 2');
+  const id = app.todos[0].id;
+  app.deleteTodo(id);
+  assert(app.todos.length === 1, 'Should have 1 todo left');
+  assert(app.todos[0].text === 'Task 2', 'Remaining todo should be Task 2');
+});
+```
+
+**To run the tests:**
+1. Open browser DevTools (F12) → Console tab
+2. Open `todo-app/index.html` — test results appear automatically
+3. All lines should show `PASS:`
+
+**Checkpoint:** All tests pass in the browser console with no `FAIL:` lines.
+
+> **Bob differentiator:** Bob generates tests that match the exact code it wrote — no manual wiring needed. The tests serve as living documentation of expected behavior.
+
+---
+
+## Lab 06 — Push to GitHub (Advanced mode, 10 min)
 
 **Switch Bob to Advanced mode.**
 
@@ -354,6 +438,7 @@ Open `todo-app/index.html` in your browser and run through these tests:
 | Created HTML and CSS files | Code mode + auto-approvals |
 | Built the TodoApp class with literate coding | Code mode |
 | Understood and fixed edge cases | Ask mode + Code mode |
+| Created and ran unit tests | Code mode |
 | Pushed the project to GitHub | Advanced mode + MCP |
 
 ---
