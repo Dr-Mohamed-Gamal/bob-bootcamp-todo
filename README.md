@@ -1,3 +1,5 @@
+<p align="center"><img src="rta.jpg" alt="RTA Dubai Logo" width="250"/></p>
+
 # Bob Bootcamp — Build a Todo App
 
 **Duration:** 45 minutes | **Difficulty:** Beginner to Intermediate | **Lab:** 1

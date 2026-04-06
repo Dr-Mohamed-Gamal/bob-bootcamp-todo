@@ -1,3 +1,5 @@
+<p align="center"><img src="rta.jpg" alt="RTA Dubai Logo" width="250"/></p>
+
 # Lab Guide — Build a Todo App with Bob
 
 **Duration:** 45 minutes | **Difficulty:** Beginner to Intermediate
