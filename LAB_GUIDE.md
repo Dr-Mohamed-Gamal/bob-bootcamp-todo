@@ -239,15 +239,7 @@ Now that the app logic is complete, ask Bob to generate unit tests for the TodoA
 
 **Prompt for Bob:**
 ```
-Create unit tests for the TodoApp class in todo-app/app.js.
-Test all methods: addTodo, toggleComplete, deleteTodo, and render.
-Cover these cases:
-- addTodo adds a todo with correct id, text, and completed=false
-- addTodo ignores empty or whitespace-only input
-- toggleComplete flips the completed status of the correct todo
-- deleteTodo removes the correct todo and leaves others unchanged
-- render shows "No tasks yet" when the list is empty
-Ensure at least 90% code coverage across all methods.
+Create unit test cases for the app and ensure at least 90% code coverage.
 Run the tests and show me the results.
 ```
 
